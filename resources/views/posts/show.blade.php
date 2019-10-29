@@ -11,6 +11,40 @@
         {!! nl2br(e($post->body)) !!}
       </p>
 
+      <form class="mb-4" method="POST" action="{{ route('comments.store') }}">
+          {{ csrf_field() }}
+
+          <input
+          name="post_id"
+          type="hidden"
+          value="{{ $post->id }}"
+          >
+
+          <div class="form-group">
+            <label for="body">
+              本文
+            </label>
+
+            <textarea
+            id="body"
+            name="body"
+            class="form-control {{ $errors->has('body') }}"
+            rows="4"
+            >{{ old('body') }}</textarea>
+            @if ($errors->has('body'))
+              <div class="invalid-feedback">
+                {{ $errors->first('body') }}
+              </div>
+            @endif
+          </div>
+
+          <div class="mt-4">
+            <button type="submit" class="btn btn-primary">
+              コメントする
+            </button>
+          </div>
+        </form>
+
       <section>
         <h2 class="h5 mb-4">
           コメント
